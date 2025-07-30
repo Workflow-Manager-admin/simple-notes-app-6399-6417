@@ -1,104 +1,168 @@
-/* CSS Variables for Theme Management */
+/* Theme Variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #1976d2;
+  --secondary: #424242;
+  --accent: #ffb300;
+  --bg-primary: #fafcfd;
+  --bg-secondary: #fff;
+  --text-primary: #242729;
+  --text-secondary: #4285A8;
+  --border-color: #e0e0e0;
+  --sidebar-bg: #f7f7f9;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
+body, html, .notes-app-root {
+  background: var(--bg-primary);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', 'Roboto', Arial, Helvetica, sans-serif;
   color: var(--text-primary);
+}
+
+.notes-app-root {
+  display: flex;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100vw;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+/* Sidebar */
+.sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  min-width: 215px;
+  width: 260px;
+  box-sizing: border-box;
+  z-index: 1;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.sidebar-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: var(--primary);
+  white-space: nowrap;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.sidebar-search-input {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  background: #f9fbfc;
+  color: #343940;
+  box-sizing: border-box;
+  transition: border 0.25s;
+}
+.sidebar-search-input:focus-visible {
+  outline: 2px solid var(--primary);
+}
+.sidebar-note-summary.selected {
+  background: var(--accent);
+  color: #fff;
+}
+
+.sidebar-note-summary:hover {
+  background: var(--accent);
+  color: #fff;
+  transition: background 0.14s;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 10px 0;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.15s, color 0.15s;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn-accent:hover {
+  background: #ffd689;
+  color: var(--primary);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.sidebar-list {
+  overflow-y: auto;
+  max-height: 56vh;
+  margin-top: 0.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Main section */
+.main-section {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  transition: background 0.2s;
+}
+
+.no-note-selected {
+  padding: 7rem 0.7rem;
+  text-align: center;
+  width: 100%;
+  color: #757575;
+  font-size: 1.3rem;
+}
+
+.note-view {
+  background: var(--bg-secondary);
+  border-radius: 14px;
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(227, 176, 0, 0.06);
+  min-width: 300px;
+  min-height: 240px;
+  margin-top: 2.5rem;
+}
+
+.btn-outline {
+  transition: border 0.13s;
+}
+
+.btn-danger:hover,
+.btn-outline:hover {
+  opacity: 0.8;
+  background: #f2f2f2;
+}
+
+/* Modal Dialogs */
+.modal-overlay {
+  background: rgba(86, 89, 95, 0.17);
+}
+
+.modal-dialog {
+  box-shadow: 0 2px 20px rgba(42, 42, 42, 0.14);
+  background: #fff;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .sidebar {
+    min-width: 200px;
+    width: 180px;
+    font-size: 0.94rem;
   }
-  to {
-    transform: rotate(360deg);
+  .main-section {
+    padding: 0 0.5rem;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 720px) {
+  .sidebar {
+    display: none;
+  }
+  .main-section {
+    width: 100vw;
+    padding: 0 0.2rem;
   }
 }
